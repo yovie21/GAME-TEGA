@@ -37,7 +37,6 @@
             size: dp(200), dp(40)
             pos_hint: {"center_x": 0.5}
 
-        # Show confirm password field only when in sign-up mode
         TextInput:
             id: confirm_password
             hint_text: "Confirm Password"
@@ -46,7 +45,7 @@
             size_hint: None, None
             size: dp(200), dp(40)
             pos_hint: {"center_x": 0.5}
-            opacity: 1 if root.is_sign_up else 0  # Hide if not in sign-up mode
+            opacity: 1 if root.is_sign_up else 0
 
         Button:
             id: submit_button
@@ -120,27 +119,26 @@
 
         Button:
             text: "Ayo Main"
-            font_size: '20sp'
             size_hint: None, None
-            size: dp(150), dp(60)
-            pos_hint: {"center_x": 0.5}
-            background_normal: ''
-            background_color: 1, 1, 1, 1
-            color: 0.2, 0.8, 0.6, 1
+		    font_size: '20sp'
             bold: True
+            size: dp(150), dp(40)
+            pos_hint: {"center_x": 0.5}
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
             canvas.before:
                 Color:
                     rgba: 1, 1, 1, 1
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [90]
-            on_release: root.start_game()
+                    radius: [30]
+            on_release: root.go_to_level_screen()
 
 <GameWidget>:
     BoxLayout:
         orientation: 'vertical'
-        padding: [10, 5, 10, 150]
+        padding: [10, 5, 10, 50]
         spacing: 10
         size_hint: 1, 1
 
@@ -179,8 +177,8 @@
             id: flag_image
             source: root.image_source
             size_hint: None, None
-            width: 250
-            height: 180
+            width: 300
+            height: 200
             pos_hint: {"center_x": 0.5}
 
         Label:
@@ -202,89 +200,99 @@
             Button:
                 id: choice1
                 text: ""
-                font_size: '16sp'
                 size_hint: None, None
-                size: dp(150), dp(60)  # Oval button size
+		        font_size: '20sp'
+                size: dp(150), dp(40)
                 pos_hint: {"center_x": 0.5}
-                background_color: 1, 1, 1, 1  # White button background
-                color: 0.2, 0.8, 0.6, 1  # Button text color
                 bold: True
+                color: 0.2, 0.8, 0.6, 1
+                background_color: 0, 0, 0, 0
                 canvas.before:
                     Color:
-                        rgba: 1, 1, 1, 1  # White background
+                        rgba: 1, 1, 1, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [90]  # Oval shape
+                        radius: [30]
                 on_release: root.check_answer(self.text)
 
             Button:
                 id: choice2
                 text: ""
-                font_size: '16sp'
                 size_hint: None, None
-                size: dp(150), dp(60)  # Oval button size
+		        font_size: '20sp'
+                size: dp(150), dp(40)
                 pos_hint: {"center_x": 0.5}
-                background_color: 1, 1, 1, 1  # White button background
-                color: 0.2, 0.8, 0.6, 1  # Button text color
                 bold: True
+                color: 0.2, 0.8, 0.6, 1
+                background_color: 0, 0, 0, 0
                 canvas.before:
                     Color:
-                        rgba: 1, 1, 1, 1  # White background
+                        rgba: 1, 1, 1, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [90]  # Oval shape
+                        radius: [30]
                 on_release: root.check_answer(self.text)
 
             Button:
                 id: choice3
                 text: ""
-                font_size: '16sp'
                 size_hint: None, None
-                size: dp(150), dp(60)  # Oval button size
+		        font_size: '20sp'
+                size: dp(150), dp(40)
                 pos_hint: {"center_x": 0.5}
-                background_color: 1, 1, 1, 1  # White button background
-                color: 0.2, 0.8, 0.6, 1  # Button text color
                 bold: True
+                color: 0.2, 0.8, 0.6, 1
+                background_color: 0, 0, 0, 0
                 canvas.before:
                     Color:
-                        rgba: 1, 1, 1, 1  # White background
+                        rgba: 1, 1, 1, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [90]  # Oval shape
+                        radius: [30]
                 on_release: root.check_answer(self.text)
 
             Button:
                 id: choice4
                 text: ""
-                font_size: '16sp'
                 size_hint: None, None
-                size: dp(150), dp(60)  # Oval button size
+		        font_size: '20sp'
+                size: dp(150), dp(40)
                 pos_hint: {"center_x": 0.5}
-                background_color: 1, 1, 1, 1  # White button background
-                color: 0.2, 0.8, 0.6, 1  # Button text color
                 bold: True
+                color: 0.2, 0.8, 0.6, 1
+                background_color: 0, 0, 0, 0
                 canvas.before:
                     Color:
-                        rgba: 1, 1, 1, 1  # White background
+                        rgba: 1, 1, 1, 1
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
-                        radius: [90]  # Oval shape
+                        radius: [30]
                 on_release: root.check_answer(self.text)
 
         Widget:
             size_hint_y: None
-            height: '20dp'  # Add spacing at the bottom
+            height: '70dp'
 
         Button:
-            text: "Back"
-            size_hint: 0.6, None
-            height: '40dp'
+            text: "Kembali"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(150), dp(40)
             pos_hint: {"center_x": 0.5}
-            background_color: 0.9, 0.2, 0.2, 1
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]
             on_release:
                 app.root.current = 'start'
                 app.root.get_screen('game').score = 0
@@ -300,14 +308,13 @@
         canvas.before:
             Color:
                 rgba: 0.2, 0.8, 0.6, 1
-            RoundedRectangle:
+            Rectangle:
                 pos: self.pos
                 size: self.size
-                radius: [20]
 
         Label:
             id: result_label
-            text: ""  # Default text, will be updated in Python
+            text: ""
             font_size: '22sp'
             color: 1, 1, 1, 1
             bold: True
@@ -319,7 +326,7 @@
             id: final_score_label
             text: "Your Final Score: 0"
             font_size: '20sp'
-            color: 0.9, 0.9, 0, 1  # Yellow color for emphasis
+            color: 0.9, 0.9, 0, 1
             size_hint_y: None
             height: '30dp'
             pos_hint: {"center_x": 0.5}
@@ -328,18 +335,27 @@
             id: time_label
             text: "Time Taken: 0 seconds"
             font_size: '18sp'
-            color: 0.8, 1, 0.8, 1  # Light green for time display
+            color: 0.8, 1, 0.8, 1
             size_hint_y: None
             height: '30dp'
             pos_hint: {"center_x": 0.5}
 
         Button:
-            text: "Play Again"
-            font_size: '16sp'
-            size_hint: 0.8, None
-            height: '40dp'
+            text: "Coba Lagi"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(250), dp(40)
             pos_hint: {"center_x": 0.5}
-            background_color: 0.3, 0.7, 0.3, 1  # Green background for positive action
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]
             on_release:
                 app.root.current = 'game'
                 app.root.get_screen('game').score = 0
@@ -348,22 +364,121 @@
                 app.root.get_screen('game').start_timer()
 
         Button:
-            text: "Back to Main Menu"
-            font_size: '16sp'
-            size_hint: 0.8, None
-            height: '40dp'
+            text: "Kembali Ke Menu Utama"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(250), dp(40)
             pos_hint: {"center_x": 0.5}
-            background_color: 0.2, 0.5, 0.8, 1  # Blue background for 'back'
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]
             on_release:
                 app.root.current = 'start'
                 app.root.get_screen('game').score = 0
                 app.root.get_screen('game').question_count = 0
 
         Button:
-            text: "Exit"
-            font_size: '16sp'
-            size_hint: 0.8, None
-            height: '40dp'
+            text: "Keluar"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(250), dp(40)
             pos_hint: {"center_x": 0.5}
-            background_color: 0.8, 0.2, 0.2, 1  # Red color for exit
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]
             on_release: app.stop()
+            
+<LevelScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [20, 20, 20, 300]
+        spacing: 15
+        size_hint: 1, 1
+
+        canvas.before:
+            Color:
+                rgba: 0.2, 0.8, 0.6, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Label:
+            text: "PILIH LEVEL MU"
+            font_size: dp(24)
+            size_hint_y: None
+            bold: True
+            height: self.texture_size[1]
+
+        # Spacer to add space between the Label and Buttons
+        Widget:
+            size_hint_y: None
+            height: dp(70)  # Adjust the height as needed
+
+        Button:
+            text: "Level 1"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(150), dp(40)
+            pos_hint: {"center_x": 0.5}
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]  # Set radius for rounded corners
+            on_press: root.select_level('asia')
+
+        Button:
+            text: "Level 2"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(150), dp(40)
+            pos_hint: {"center_x": 0.5}
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]
+            on_press: root.select_level('europe')
+
+        Button:
+            text: "Level 3"
+            size_hint: None, None
+		    font_size: '20sp'
+            size: dp(150), dp(40)
+            pos_hint: {"center_x": 0.5}
+            bold: True
+            color: 0.2, 0.8, 0.6, 1
+            background_color: 0, 0, 0, 0
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [30]
+            on_press: root.select_level('amerikaselatan')
+

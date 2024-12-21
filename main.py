@@ -2,7 +2,7 @@ import threading
 import pygame
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, BooleanProperty
 from kivy.lang import Builder
 from kivy.clock import Clock
 import random
@@ -21,37 +21,65 @@ pygame.mixer.init()
 # Load sounds
 CORRECT_SOUND = "assets/sounds/benar.mp3"
 WRONG_SOUND = "assets/sounds/salah.mp3"
-VICTORY_SOUND = "assets/sounds/victory.mp3"  # Suara kemenangan
-GAME_OVER_SOUND = "assets/sounds/gameover.mp3"  # Suara game over
-OPENING_SOUND = "assets/sounds/opening.mp3"  # Suara opening
+VICTORY_SOUND = "assets/sounds/victory.mp3"
+GAME_OVER_SOUND = "assets/sounds/gameover.mp3"
+OPENING_SOUND = "assets/sounds/opening.mp3"
 
-questions = [
-    {"image": "images/Indonesia.png", "answer": "Indonesia", "choices": ["Indonesia", "Malaysia", "Thailand", "Singapore"]},
-    {"image": "images/Jepang.png", "answer": "Jepang", "choices": ["Vietnam", "Filiphina", "Thailand", "Jepang"]},
-    {"image": "images/Australia.png", "answer": "Australia", "choices": ["Australia", "Haiti", "Afrika", "Inggris"]},
-    {"image": "images/Jerman.png", "answer": "Jerman", "choices": ["Jerman", "Jamaika", "Sudan", "India"]},
-    {"image": "images/Argentina.png", "answer": "Argentina", "choices": ["Spain", "Argentina", "Peru", "Kroasia"]},
-    {"image": "images/Amerika.png", "answer": "Amerika", "choices": ["Brazil", "Belanda", "Amerika", "United States"]},
-    {"image": "images/Korea Utara.png", "answer": "Korea Utara", "choices": ["Singapura", "Indonesia", "Korea Utara", "Malaysia"]},
-    {"image": "images/Korea Selatan.png", "answer": "Korea Selatan", "choices": ["Timor Leste", "Palestina", "Malaysia", "Korea Selatan"]},
-    {"image": "images/Portugal.png", "answer": "Portugal", "choices": ["Jerman", "Spanyol", "Inggris", "Portugal"]},
-    {"image": "images/Belanda.png", "answer": "Belanda", "choices": ["Qatar", "Belanda", "China", "Malaysia"]},
-    {"image": "images/Saudi Arabia.png", "answer": "Saudi Arabia", "choices": ["Indonesia", "Malaysia", "Saudi Arabia", "Singapore"]},
-]
+# Questions categorized by level
+questions = {
+    "asia": [
+        {"image": "images/Indonesia.png", "answer": "Indonesia", "choices": ["Indonesia", "Malaysia", "Thailand", "Singapore"]},
+        {"image": "images/Jepang.png", "answer": "Jepang", "choices": ["Vietnam", "Filiphina", "Thailand", "Jepang"]},
+        {"image": "images/Korea Selatan.png", "answer": "Korea Selatan", "choices": ["Timor Leste", "Palestina", "Malaysia", "Korea Selatan"]},
+        {"image": "images/lebanon.png", "answer": "Lebanon", "choices": ["Lebanon", "Malaysia", "Thailand", "Singapore"]},
+        {"image": "images/laos.png", "answer": "Laos", "choices": ["Vietnam", "Filiphina", "Thailand", "Laos"]},
+        {"image": "images/jordan.png", "answer": "Jordan", "choices": ["Timor Leste", "Jordan", "Malaysia", "Korea Selatan"]},
+        {"image": "images/irak.png", "answer": "Irak", "choices": ["Irak", "Malaysia", "Thailand", "Singapore"]},
+        {"image": "images/iran.png", "answer": "Iran", "choices": ["Vietnam", "Filiphina", "Iran", "Jepang"]},
+        {"image": "images/mesir.png", "answer": "Mesir", "choices": ["Mesir", "Malaysia", "Thailand", "Singapore"]},
+        {"image": "images/timorleste.png", "answer": "Timor Leste", "choices": ["Vietnam", "Timor Leste", "Thailand", "Jepang"]},
+        {"image": "images/kamboja.png", "answer": "Kamboja", "choices": ["Kamboja", "Palestina", "Malaysia", "Korea Selatan"]},
+        {"image": "images/brunai.png", "answer": "Brunai", "choices": ["Brunai", "Malaysia", "Thailand", "Singapore"]},
+        {"image": "images/Afganistan.png", "answer": "Afganistan", "choices": ["Vietnam", "Filiphina", "Thailand", "Afganistan"]}
+    ],
+    "europe": [
+        {"image": "images/Jerman.png", "answer": "Jerman", "choices": ["Jerman", "Jamaika", "Sudan", "India"]},
+        {"image": "images/Portugal.png", "answer": "Portugal", "choices": ["Jerman", "Spanyol", "Inggris", "Portugal"]},
+        {"image": "images/Belanda.png", "answer": "Belanda", "choices": ["Qatar", "Belanda", "China", "Malaysia"]},
+        {"image": "images/italia.png", "answer": "Italia", "choices": ["Italia", "Jamaika", "Sudan", "India"]},
+        {"image": "images/irlandia.png", "answer": "Irlandia", "choices": ["Italia", "Irlandia", "Inggris", "Portugal"]},
+        {"image": "images/yunani.png", "answer": "Yunani", "choices": ["Yunani", "Jamaika", "Sudan", "India"]},
+        {"image": "images/finlandia.png", "answer": "Finlandia", "choices": ["Finlandia", "Spanyol", "Inggris", "Portugal"]},
+        {"image": "images/denmark.png", "answer": "Denmark", "choices": ["Denmark", "Jamaika", "Sudan", "India"]},
+        {"image": "images/ceko.png", "answer": "Ceko", "choices": ["Ceko", "Spanyol", "Inggris", "Portugal"]},
+        {"image": "images/kroasia.png", "answer": "Kroasia", "choices": ["Kroasia", "Jamaika", "Sudan", "India"]},
+        {"image": "images/belgia.png", "answer": "Belgia", "choices": ["Belgia", "Spanyol", "Inggris", "Portugal"]},
+        {"image": "images/austria.png", "answer": "Austria", "choices": ["Austria", "Jamaika", "Sudan", "India"]}
+    ],
+    "amerikaselatan": [
+        {"image": "images/Argentina.png", "answer": "Argentina", "choices": ["Argentina", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Bolivia.png", "answer": "Bolivia", "choices": ["Bolivia", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Brazil.png", "answer": "Brazil", "choices": ["Brazil", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Chile.png", "answer": "Chile", "choices": ["Chile", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Colombia.png", "answer": "Colombia", "choices": ["Colombia", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Ecuador.png", "answer": "Ecuador", "choices": ["Ecuador", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Paraguay.png", "answer": "Paraguay", "choices": ["Paraguay", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Peru.png", "answer": "Peru", "choices": ["Peru", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Suriname.png", "answer": "Suriname", "choices": ["Suriname", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Uruguay.png", "answer": "Uruguay", "choices": ["Uruguay", "Haiti", "Afrika", "Inggris"]},
+        {"image": "images/Venezuela.png", "answer": "Venezuela", "choices": ["Venezuela", "Haiti", "Afrika", "Inggris"]}
+    ]
+}
 
 class LoginScreen(Screen):
-    is_sign_up = BooleanProperty(False)  # Declare the 'is_sign_up' as a BooleanProperty
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+    is_sign_up = BooleanProperty(False)
 
     def toggle_sign_up(self):
-        """Switch between login and sign-up forms."""
         self.is_sign_up = not self.is_sign_up
         self.ids.login_error.text = ""
         self.ids.username.text = ""
         self.ids.password.text = ""
-        self.ids.confirm_password.text = ""  # Clear confirm password
+        self.ids.confirm_password.text = ""
         if self.is_sign_up:
             self.ids.submit_button.text = "Sign Up"
             self.ids.switch_button.text = "Already have an account? Log in"
@@ -60,34 +88,26 @@ class LoginScreen(Screen):
             self.ids.switch_button.text = "Don't have an account? Sign up"
 
     def submit(self):
-        """Handle login or sign-up based on the form mode."""
         username_input = self.ids.username.text
         password_input = self.ids.password.text
         if self.is_sign_up:
-            # Check if passwords match for sign-up
             confirm_password_input = self.ids.confirm_password.text
             if password_input == confirm_password_input:
-                # Proceed with sign-up (mock example)
-                self.manager.current = 'start'  # Transition to the start screen after successful registration
+                self.manager.current = 'start'
             else:
                 self.ids.login_error.text = "Passwords do not match."
         else:
-            # Login validation (hardcoded for testing)
             if username_input == "admin" and password_input == "1234":
-                self.manager.current = 'start'  # Transition to the start screen after successful login
+                self.manager.current = 'start'
             else:
                 self.ids.login_error.text = "Invalid Username or Password"
-    
-    def clear_error(self):
-        self.ids.login_error.text = ""
 
 class StartScreen(Screen):
     def on_enter(self):
         self.play_opening_sound()
 
-    def start_game(self):
-        self.manager.current = 'game'
-        self.manager.get_screen('game').start_timer()
+    def go_to_level_screen(self):
+        self.manager.current = 'level'
 
     def play_opening_sound(self):
         pygame.mixer.music.load(OPENING_SOUND)
@@ -95,9 +115,19 @@ class StartScreen(Screen):
 
     def stop_opening_sound(self):
         pygame.mixer.music.stop()
+
+class LevelScreen(Screen):
+    def select_level(self, level):
+        game_screen = self.manager.get_screen('game')
+        game_screen.selected_level = level
+        game_screen.load_questions()
+        self.manager.current = 'game'
+        game_screen.start_timer()
+
 class GameWidget(Screen):
     image_source = StringProperty("")
     timer = NumericProperty(0)
+    selected_level = StringProperty("asia")
 
     def __init__(self, **kwargs):
         super(GameWidget, self).__init__(**kwargs)
@@ -105,7 +135,6 @@ class GameWidget(Screen):
         self.question_count = 0
         self.current_question = None
         self.timer_event = None
-        self.load_question()
 
     def start_timer(self):
         self.timer = 0
@@ -117,11 +146,15 @@ class GameWidget(Screen):
         self.timer += 1
         self.ids.timer_label.text = f"Time: {self.timer}s"
 
+    def load_questions(self):
+        self.questions = questions[self.selected_level]
+        self.load_question()
+
     def load_question(self):
-        if self.question_count >= 10:
+        if self.question_count  >= 10:
             self.end_game()
         else:
-            self.current_question = random.choice(questions)
+            self.current_question = random.choice(self.questions)
             self.image_source = self.current_question["image"]
             self.ids.score_label.text = f"Your Score: {self.score}"
             self.ids.answer_label.text = ""
@@ -211,6 +244,7 @@ class TebakGambarApp(App):
         sm = ScreenManager()
         sm.add_widget(LoginScreen(name='login'))
         sm.add_widget(StartScreen(name='start'))
+        sm.add_widget(LevelScreen(name='level'))
         sm.add_widget(GameWidget(name='game'))
         sm.add_widget(ResultScreen(name='result'))
         return sm

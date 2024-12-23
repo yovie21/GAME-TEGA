@@ -118,22 +118,14 @@
             pos_hint: {"center_x": 0.5}
 
         Button:
-            text: "Ayo Main"
             size_hint: None, None
-		    font_size: '20sp'
-            bold: True
-            size: dp(150), dp(40)
+            size: dp(200), dp(80)
             pos_hint: {"center_x": 0.5}
-            color: 0.2, 0.8, 0.6, 1
-            background_color: 0, 0, 0, 0
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [30]
+            background_normal: 'images/button play.png'  # Menggunakan gambar sebagai background tombol
+            background_down: 'images/button play.png'  # Menggunakan gambar saat tombol ditekan
             on_release: root.go_to_level_screen()
+
+
 
 <GameWidget>:
     BoxLayout:
@@ -278,21 +270,12 @@
             height: '70dp'
 
         Button:
-            text: "Kembali"
             size_hint: None, None
-		    font_size: '20sp'
-            size: dp(150), dp(40)
+            size: dp(200), dp(80)
             pos_hint: {"center_x": 0.5}
-            bold: True
-            color: 0.2, 0.8, 0.6, 1
-            background_color: 0, 0, 0, 0
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [30]
+            background_normal: 'images/button kembali.png'  # Menggunakan gambar sebagai background tombol
+            background_down: 'images/button kembali.png'  # Menggunakan gambar saat tombol ditekan
+            on_release: root.go_to_level_screen()
             on_release:
                 app.root.current = 'start'
                 app.root.get_screen('game').score = 0
@@ -427,58 +410,30 @@
         Widget:
             size_hint_y: None
             height: dp(70)  # Adjust the height as needed
-
         Button:
-            text: "Level 1"
             size_hint: None, None
-		    font_size: '20sp'
-            size: dp(150), dp(40)
+            size: dp(200), dp(80)
             pos_hint: {"center_x": 0.5}
-            bold: True
-            color: 0.2, 0.8, 0.6, 1
-            background_color: 0, 0, 0, 0
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [30]  # Set radius for rounded corners
+            background_normal: 'images/button level 1.png'  # Menggunakan gambar sebagai background tombol
+            background_down: 'images/button level 1.png'  # Menggunakan gambar saat tombol ditekan
+            on_release: root.go_to_level_screen()
             on_press: root.select_level('asia')
 
         Button:
-            text: "Level 2"
             size_hint: None, None
-		    font_size: '20sp'
-            size: dp(150), dp(40)
+            size: dp(200), dp(80)
             pos_hint: {"center_x": 0.5}
-            bold: True
-            color: 0.2, 0.8, 0.6, 1
-            background_color: 0, 0, 0, 0
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [30]
+            background_normal: 'images/button level 2.png'  # Menggunakan gambar sebagai background tombol
+            background_down: 'images/button level 2.png'  # Menggunakan gambar saat tombol ditekan
+            on_release: root.go_to_level_screen()
             on_press: root.select_level('europe')
 
         Button:
-            text: "Level 3"
             size_hint: None, None
-		    font_size: '20sp'
-            size: dp(150), dp(40)
+            size: dp(200), dp(80)
             pos_hint: {"center_x": 0.5}
-            bold: True
-            color: 0.2, 0.8, 0.6, 1
-            background_color: 0, 0, 0, 0
-            canvas.before:
-                Color:
-                    rgba: 1, 1, 1, 1
-                RoundedRectangle:
-                    pos: self.pos
-                    size: self.size
-                    radius: [30]
+            background_normal: 'images/button level 3.png'  # Menggunakan gambar sebagai background tombol
+            background_down: 'images/button level 3.png'  # Menggunakan gambar saat tombol ditekan
+            on_release: root.go_to_level_screen()
             on_press: root.select_level('amerikaselatan')
 

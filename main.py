@@ -71,37 +71,6 @@ questions = {
     ]
 }
 
-class LoginScreen(Screen):
-    is_sign_up = BooleanProperty(False)
-
-    def toggle_sign_up(self):
-        self.is_sign_up = not self.is_sign_up
-        self.ids.login_error.text = ""
-        self.ids.username.text = ""
-        self.ids.password.text = ""
-        self.ids.confirm_password.text = ""
-        if self.is_sign_up:
-            self.ids.submit_button.text = "Sign Up"
-            self.ids.switch_button.text = "Already have an account? Log in"
-        else:
-            self.ids.submit_button.text = "Login"
-            self.ids.switch_button.text = "Don't have an account? Sign up"
-
-    def submit(self):
-        username_input = self.ids.username.text
-        password_input = self.ids.password.text
-        if self.is_sign_up:
-            confirm_password_input = self.ids.confirm_password.text
-            if password_input == confirm_password_input:
-                self.manager.current = 'start'
-            else:
-                self.ids.login_error.text = "Passwords do not match."
-        else:
-            if username_input == "admin" and password_input == "1234":
-                self.manager.current = 'start'
-            else:
-                self.ids.login_error.text = "Invalid Username or Password"
-
 class StartScreen(Screen):
     def on_enter(self):
         self.play_opening_sound()
@@ -242,7 +211,6 @@ class ResultScreen(Screen):
 class TebakGambarApp(App):
     def build(self):
         sm = ScreenManager()
-        sm.add_widget(LoginScreen(name='login'))
         sm.add_widget(StartScreen(name='start'))
         sm.add_widget(LevelScreen(name='level'))
         sm.add_widget(GameWidget(name='game'))
